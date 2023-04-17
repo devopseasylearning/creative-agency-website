@@ -19,7 +19,7 @@ options {
                         parameters([
                         
                         choice(
-                            choices: ['Food', 'Bomber', 'Weather', 'Titan'], 
+                            choices: ['kanibal', 'Bomber', 'Weather', 'Titan'], 
                             name: 'Application'
                                  
                                 ),
@@ -70,10 +70,10 @@ stage('SonarQube analysis') {
  }
 
 
-stage('Build Image Food_api') {
+stage('Build Image kanibal_api') {
   when{   
       expression {
-      env.Application == 'Food' }
+      env.Application == 'kanibal' }
             }
 
 	      steps {
@@ -83,7 +83,7 @@ stage('Build Image Food_api') {
 	          ]) {
 
 	            sh '''
-docker build -t devopseasylearning2021/food:jenkins-$BUILD_NUMBER .
+docker build -t devopseasylearning2021/agency:jenkins-$BUILD_NUMBER .
 	            '''
 	          }
 
@@ -94,10 +94,10 @@ docker build -t devopseasylearning2021/food:jenkins-$BUILD_NUMBER .
 	    }
 
 
-stage('Build Image Food_consumer') {
+stage('Build Image kanibal_consumer') {
   when{   
       expression {
-      env.Application == 'Food' }
+      env.Application == 'kanibal' }
             }
 
 	      steps {
@@ -108,7 +108,7 @@ stage('Build Image Food_consumer') {
 
 	            sh '''
                 
-docker build -t devopseasylearning2021/food:jenkins-$BUILD_NUMBER .
+docker build -t devopseasylearning2021/agency:jenkins-$BUILD_NUMBER .
 	            '''
 	          }
 
@@ -118,10 +118,10 @@ docker build -t devopseasylearning2021/food:jenkins-$BUILD_NUMBER .
 
 	    }
 
-stage('Build Image Food_ui') {
+stage('Build Image kanibal_ui') {
   when{   
       expression {
-      env.Application == 'Food' }
+      env.Application == 'kanibal' }
             }
 
 	      steps {
@@ -132,7 +132,7 @@ stage('Build Image Food_ui') {
 
 	            sh '''
                 sleep 100
-docker build -t devopseasylearning2021/food:jenkins-$BUILD_NUMBER .
+docker build -t devopseasylearning2021/agency:jenkins-$BUILD_NUMBER .
 	            '''
 	          }
 
@@ -157,7 +157,7 @@ stage('Login to dockerhub') {
 stage('Push  Image to DockerHub') {
   when{   
       expression {
-      env.Application == 'Food' }
+      env.Application == 'kanibal' }
             }
 
 	      steps {
@@ -167,7 +167,7 @@ stage('Push  Image to DockerHub') {
 	          ]) {
 
 	            sh '''
-docker push devopseasylearning2021/food:jenkins-$BUILD_NUMBER 
+docker push devopseasylearning2021/kanibal:jenkins-$BUILD_NUMBER 
 	            '''
 	          }
 
@@ -206,10 +206,10 @@ stage('load Test') {
 		}
 
 
-stage('Update Food Values File') {
+stage('Update kanibal Values File') {
   when{   
       expression {
-      env.Application == 'Food' }
+      env.Application == 'kanibal' }
             }
 
 	      steps {
@@ -221,11 +221,11 @@ stage('Update Food Values File') {
 	            sh '''
                  rm -rf production-deployment || true
                  git clone https://devopseasylearning:$TOKEN@github.com/devopseasylearning/production-deployment.git 
-                 cd production-deployment/foods
+                 cd production-deployment/kanibal
 cat <<EOF > prod-values.yaml
     replicaCount: 3
     image:
-      repository: devopseasylearning2021/food
+      repository: devopseasylearning2021/kanibal
       pullPolicy: IfNotPresent
       tag: "jenkins-$BUILD_NUMBER"
 EOF
