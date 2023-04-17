@@ -167,7 +167,7 @@ stage('Push  Image to DockerHub') {
 	          ]) {
 
 	            sh '''
-docker push devopseasylearning2021/kanibal:jenkins-$BUILD_NUMBER 
+docker push devopseasylearning2021/agency:jenkins-$BUILD_NUMBER 
 	            '''
 	          }
 
