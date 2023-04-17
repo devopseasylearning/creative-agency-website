@@ -236,7 +236,7 @@ stage('Update kanibal Values File') {
 cat <<EOF > prod-values.yaml
     replicaCount: 3
     image:
-      repository: devopseasylearning2021/kanibal
+      repository: devopseasylearning2021/agency
       pullPolicy: IfNotPresent
       tag: "jenkins-$BUILD_NUMBER"
 EOF
